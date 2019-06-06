@@ -12,7 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Runner {
-
+	
+	// method taken from
+	// https://stackoverflow.com/questions/4308554/simplest-way-to-read-json-from-a-url-in-java
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int cp;
@@ -24,18 +26,13 @@ public class Runner {
 
 	public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
-		try {
-			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-			String jsonText = readAll(rd);
-			JSONObject json = new JSONObject(jsonText);
-			return json;
-		} finally {
-			is.close();
-		}
+		BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+		String jsonText = readAll(rd);
+		JSONObject json = new JSONObject(jsonText);
+		is.close();
+		return json;
 	}
 
-	// method taken from
-	// https://stackoverflow.com/questions/3932502/calculate-angle-between-two-latitude-longitude-points
 	public static double chordDistance(double lat1, double long1, double lat2, double long2) {
 
 		double x1, y1, z1;
